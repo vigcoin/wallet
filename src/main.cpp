@@ -26,7 +26,7 @@ using namespace WalletGui;
 
 int main(int argc, char* argv[]) {
   QApplication app(argc, argv);
-  app.setApplicationName(CurrencyAdapter::instance().getCurrencyName() + "wallet");
+  app.setApplicationName(CurrencyAdapter::instance().getCurrencyName() + "钱包");
   app.setApplicationVersion(Settings::instance().getVersion());
   app.setQuitOnLastWindowClosed(false);
 
@@ -41,10 +41,10 @@ int main(int argc, char* argv[]) {
 
 #ifdef Q_OS_WIN
   if(!cmdLineParseResult) {
-    QMessageBox::critical(nullptr, QObject::tr("Error"), cmdLineParser.getErrorText());
+    QMessageBox::critical(nullptr, QObject::tr("错误"), cmdLineParser.getErrorText());
     return app.exec();
   } else if (cmdLineParser.hasHelpOption()) {
-    QMessageBox::information(nullptr, QObject::tr("Help"), cmdLineParser.getHelpText());
+    QMessageBox::information(nullptr, QObject::tr("帮助"), cmdLineParser.getHelpText());
     return app.exec();
   }
 #endif
@@ -58,7 +58,7 @@ int main(int argc, char* argv[]) {
 
   QLockFile lockFile(Settings::instance().getDataDir().absoluteFilePath(QApplication::applicationName() + ".lock"));
   if (!lockFile.tryLock()) {
-    QMessageBox::warning(nullptr, QObject::tr("Fail"), QString("%1 wallet already running").arg(CurrencyAdapter::instance().getCurrencyDisplayName()));
+    QMessageBox::warning(nullptr, QObject::tr("失败"), QString("%1钱包已经在运行").arg(CurrencyAdapter::instance().getCurrencyDisplayName()));
     return 0;
   }
 
@@ -72,7 +72,7 @@ int main(int argc, char* argv[]) {
     splash->show();
   }
 
-  splash->showMessage(QObject::tr("Loading blockchain..."), Qt::AlignLeft | Qt::AlignBottom, Qt::white);
+  splash->showMessage(QObject::tr("区块链加载中..."), Qt::AlignLeft | Qt::AlignBottom, Qt::white);
   app.processEvents();
   qRegisterMetaType<CryptoNote::TransactionId>("CryptoNote::TransactionId");
   qRegisterMetaType<quintptr>("quintptr");

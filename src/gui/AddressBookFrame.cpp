@@ -32,7 +32,7 @@ void AddressBookFrame::addClicked() {
     QString label = dlg.getLabel();
     QString address = dlg.getAddress();
     if (!CurrencyAdapter::instance().validateAddress(address)) {
-      QCoreApplication::postEvent(&MainWindow::instance(), new ShowMessageEvent(tr("Invalid address"), QtCriticalMsg));
+      QCoreApplication::postEvent(&MainWindow::instance(), new ShowMessageEvent(tr("无效地址"), QtCriticalMsg));
       return;
     }
 

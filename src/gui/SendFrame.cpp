@@ -67,7 +67,7 @@ void SendFrame::sendClicked() {
     if (!CurrencyAdapter::instance().validateAddress(address)) {
       QCoreApplication::postEvent(
         &MainWindow::instance(),
-        new ShowMessageEvent(tr("Invalid recipient address"), QtCriticalMsg));
+        new ShowMessageEvent(tr("无效接收地址"), QtCriticalMsg));
       return;
     }
 

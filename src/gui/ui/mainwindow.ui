@@ -29,7 +29,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>主窗口</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../../resources.qrc">
@@ -115,7 +115,7 @@
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>File</string>
+     <string>文件</string>
     </property>
     <addaction name="m_createWalletAction"/>
     <addaction name="m_openWalletAction"/>
@@ -124,7 +124,7 @@
    </widget>
    <widget class="QMenu" name="menuSettings">
     <property name="title">
-     <string>Settings</string>
+     <string>设置</string>
     </property>
     <addaction name="m_encryptWalletAction"/>
     <addaction name="m_changePasswordAction"/>
@@ -135,7 +135,7 @@
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
-     <string>Help</string>
+     <string>帮助</string>
     </property>
     <addaction name="m_aboutCryptonoteAction"/>
     <addaction name="m_aboutQtAction"/>
@@ -146,7 +146,7 @@
   </widget>
   <widget class="QToolBar" name="toolBar">
    <property name="windowTitle">
-    <string>toolBar</string>
+    <string>工具栏</string>
    </property>
    <property name="movable">
     <bool>false</bool>
@@ -179,7 +179,7 @@
      <normaloff>:/icons/overview</normaloff>:/icons/overview</iconset>
    </property>
    <property name="text">
-    <string>Overview</string>
+    <string>概览</string>
    </property>
   </action>
   <action name="m_sendAction">
@@ -194,7 +194,7 @@
      <normaloff>:/icons/send</normaloff>:/icons/send</iconset>
    </property>
    <property name="text">
-    <string>Send</string>
+    <string>发送</string>
    </property>
   </action>
   <action name="m_receiveAction">
@@ -209,7 +209,7 @@
      <normaloff>:/icons/receive</normaloff>:/icons/receive</iconset>
    </property>
    <property name="text">
-    <string>Receive</string>
+    <string>接收</string>
    </property>
   </action>
   <action name="m_transactionsAction">
@@ -224,7 +224,7 @@
      <normaloff>:/icons/transactions</normaloff>:/icons/transactions</iconset>
    </property>
    <property name="text">
-    <string>Transactions</string>
+    <string>交易</string>
    </property>
   </action>
   <action name="m_exitAction">
@@ -232,7 +232,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Exit</string>
+    <string>退出</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Q</string>
@@ -250,7 +250,7 @@
      <normaloff>:/icons/address-book</normaloff>:/icons/address-book</iconset>
    </property>
    <property name="text">
-    <string>Address Book</string>
+    <string>地址</string>
    </property>
   </action>
   <action name="m_createWalletAction">
@@ -258,7 +258,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Create wallet</string>
+    <string>创建钱包</string>
    </property>
   </action>
   <action name="m_openWalletAction">
@@ -266,7 +266,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Open wallet</string>
+    <string>打开钱包</string>
    </property>
   </action>
   <action name="m_encryptWalletAction">
@@ -274,7 +274,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Encrypt wallet</string>
+    <string>加密钱包</string>
    </property>
   </action>
   <action name="m_changePasswordAction">
@@ -282,10 +282,10 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Change password</string>
+    <string>修改密码</string>
    </property>
    <property name="toolTip">
-    <string>Change password</string>
+    <string>修改密码</string>
    </property>
   </action>
   <action name="m_aboutCryptonoteAction">
@@ -293,7 +293,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>About</string>
+    <string>关于</string>
    </property>
   </action>
   <action name="m_aboutQtAction">
@@ -301,7 +301,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>About Qt</string>
+    <string>关于Qt</string>
    </property>
   </action>
   <action name="m_backupWalletAction">
@@ -309,7 +309,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Backup wallet</string>
+    <string>备份钱包</string>
    </property>
   </action>
   <action name="m_startOnLoginAction">
@@ -317,7 +317,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Start on system login</string>
+    <string>随系统启动而启动</string>
    </property>
   </action>
   <action name="m_minimizeToTrayAction">
@@ -325,7 +325,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Minimize to tray</string>
+    <string>最小化到图标</string>
    </property>
   </action>
   <action name="m_closeToTrayAction">
@@ -333,7 +333,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Close to tray</string>
+    <string>关闭成图标</string>
    </property>
   </action>
  </widget>

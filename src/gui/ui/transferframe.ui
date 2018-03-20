@@ -35,7 +35,7 @@
    <item row="0" column="0">
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>Pay To:</string>
+      <string>付给:</string>
      </property>
     </widget>
    </item>
@@ -64,14 +64,14 @@
    <item row="1" column="1" colspan="5">
     <widget class="QLineEdit" name="m_labelEdit">
      <property name="placeholderText">
-      <string>Enter a label for this address to add it to your address book</string>
+      <string>输入一个标签标示该地址</string>
      </property>
     </widget>
    </item>
    <item row="2" column="0">
     <widget class="QLabel" name="label_3">
      <property name="text">
-      <string>Amount:</string>
+      <string>数量:</string>
      </property>
     </widget>
    </item>
@@ -102,7 +102,7 @@
    <item row="1" column="0">
     <widget class="QLabel" name="label_2">
      <property name="text">
-      <string>Label:</string>
+      <string>标签:</string>
      </property>
     </widget>
    </item>

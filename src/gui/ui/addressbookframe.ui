@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Frame</string>
+   <string>帧</string>
   </property>
   <property name="frameShape">
    <enum>QFrame::StyledPanel</enum>
@@ -28,7 +28,7 @@
      <item>
       <widget class="QPushButton" name="m_addAddressButton">
        <property name="text">
-        <string>New address</string>
+        <string>新地址</string>
        </property>
        <property name="icon">
         <iconset resource="../../resources.qrc">
@@ -42,7 +42,7 @@
         <bool>false</bool>
        </property>
        <property name="text">
-        <string>Delete address</string>
+        <string>删除地址</string>
        </property>
        <property name="icon">
         <iconset resource="../../resources.qrc">
@@ -56,7 +56,7 @@
         <bool>false</bool>
        </property>
        <property name="text">
-        <string>Copy address</string>
+        <string>复制地址</string>
        </property>
        <property name="icon">
         <iconset resource="../../resources.qrc">

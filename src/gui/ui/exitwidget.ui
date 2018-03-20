@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Saving data</string>
+   <string>保存数据</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,1">
    <item>
@@ -24,8 +24,7 @@
    <item>
     <widget class="QLabel" name="m_label">
      <property name="text">
-      <string>%1 wallet is saving data.
-Please wait...</string>
+      <string>%1 钱包正在保存数据，请等待...</string>
      </property>
     </widget>
    </item>
