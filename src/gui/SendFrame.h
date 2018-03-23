@@ -7,6 +7,7 @@
 #include <QFrame>
 
 #include <IWallet.h>
+#include <IWalletLegacy.h>
 
 namespace Ui {
   class SendFrame;
@@ -34,7 +35,7 @@ private:
   Q_SLOT void addRecipientClicked();
   Q_SLOT void clearAllClicked();
   Q_SLOT void mixinValueChanged(int _value);
-  Q_SLOT void sendClicked();
+  Q_SLOT void sendClicked(void);
 };
 
 }

@@ -24,7 +24,7 @@ void NewPasswordDialog::checkPassword(const QString& _password) {
   bool passwordIsConfirmed = !(m_ui->m_passwordEdit->text().trimmed().isEmpty() ||
     m_ui->m_passwordConfirmationEdit->text().trimmed().isEmpty() ||
     m_ui->m_passwordEdit->text().compare(m_ui->m_passwordConfirmationEdit->text()));
-  m_ui->m_errorLabel->setText(passwordIsConfirmed ? "" : tr("密码没有确认"));
+  m_ui->m_errorLabel->setText(passwordIsConfirmed ? "" : tr("Password not confirmed"));
   m_ui->m_okButton->setEnabled(passwordIsConfirmed);
 }
 

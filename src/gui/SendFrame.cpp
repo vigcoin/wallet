@@ -60,14 +60,14 @@ void SendFrame::clearAllClicked() {
   m_ui->m_mixinSlider->setValue(2);
 }
 
-void SendFrame::sendClicked() {
+void SendFrame::sendClicked(void) {
   QVector<CryptoNote::WalletLegacyTransfer> walletTransfers;
   Q_FOREACH (TransferFrame * transfer, m_transfers) {
     QString address = transfer->getAddress();
     if (!CurrencyAdapter::instance().validateAddress(address)) {
       QCoreApplication::postEvent(
         &MainWindow::instance(),
-        new ShowMessageEvent(tr("无效接收地址"), QtCriticalMsg));
+        new ShowMessageEvent(tr("Invalid recipient address"), QtCriticalMsg));
       return;
     }
 

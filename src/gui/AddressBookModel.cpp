@@ -69,9 +69,9 @@ QVariant AddressBookModel::headerData(int _section, Qt::Orientation _orientation
 
   switch (_section) {
   case COLUMN_LABEL:
-    return tr("标签");
+    return tr("Label");
   case COLUMN_ADDRESS:
-    return tr("地址");
+    return tr("Address");
   }
 
   return QVariant();

@@ -86,17 +86,17 @@ QVariant TransactionsModel::headerData(int _section, Qt::Orientation _orientatio
     case COLUMN_STATE:
       return QVariant();
     case COLUMN_DATE:
-      return tr("日期");
+      return tr("Date");
     case COLUMN_TYPE:
-      return tr("类型");
+      return tr("Type");
     case COLUMN_HASH:
-      return tr("哈希");
+      return tr("Hash");
     case COLUMN_ADDRESS:
-      return tr("地址");
+      return tr("Address");
     case COLUMN_AMOUNT:
-      return tr("数量");
+      return tr("Amount");
     case COLUMN_PAYMENT_ID:
-      return tr("支付ID");
+      return tr("PaymentID");
     default:
       break;
     }
@@ -163,7 +163,7 @@ QModelIndex TransactionsModel::parent(const QModelIndex& _index) const {
 
 QByteArray TransactionsModel::toCsv() const {
   QByteArray res;
-  res.append("\"状态\",\"日期\",\"数量\",\"费用\",\"哈希\",\"高度\",\"地址\",\"支付ID\"\n");
+  res.append("\"State\",\"Date\",\"Amount\",\"Fee\",\"Hash\",\"Height\",\"Address\",\"Payment ID\"\n");
   for (quint32 row = 0; row < rowCount(); ++row) {
     QModelIndex ind = index(row, 0);
     res.append("\"").append(ind.data().toString().toUtf8()).append("\",");
@@ -194,7 +194,7 @@ QVariant TransactionsModel::getDisplayRole(const QModelIndex& _index) const {
     QString transactionAddress = _index.data(ROLE_ADDRESS).toString();
     if (transactionType == TransactionType::INPUT || transactionType == TransactionType::MINED ||
         transactionType == TransactionType::INOUT) {
-      return QString(tr("我(%1)").arg(WalletAdapter::instance().getAddress()));
+      return QString(tr("me (%1)").arg(WalletAdapter::instance().getAddress()));
     } else if (transactionAddress.isEmpty()) {
       return tr("(n/a)");
     }

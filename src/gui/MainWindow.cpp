@@ -69,14 +69,14 @@ void MainWindow::connectToSignals() {
 }
 
 void MainWindow::initUi() {
-  setWindowTitle(QString("%1钱包 %2").arg(CurrencyAdapter::instance().getCurrencyDisplayName()).arg(Settings::instance().getVersion()));
+  setWindowTitle(QString("%1 Wallet %2").arg(CurrencyAdapter::instance().getCurrencyDisplayName()).arg(Settings::instance().getVersion()));
 #ifdef Q_OS_WIN32
   if (QSystemTrayIcon::isSystemTrayAvailable()) {
     m_trayIcon = new QSystemTrayIcon(QPixmap(":images/cryptonote"), this);
     connect(m_trayIcon, &QSystemTrayIcon::activated, this, &MainWindow::trayActivated);
   }
 #endif
-  m_ui->m_aboutCryptonoteAction->setText(QString(tr("关于%1钱包")).arg(CurrencyAdapter::instance().getCurrencyDisplayName()));
+  m_ui->m_aboutCryptonoteAction->setText(QString(tr("About %1 Wallet")).arg(CurrencyAdapter::instance().getCurrencyDisplayName()));
 
   m_ui->m_overviewFrame->hide();
   m_ui->m_sendFrame->hide();
@@ -200,13 +200,13 @@ bool MainWindow::event(QEvent* _event) {
 }
 
 void MainWindow::createWallet() {
-  QString filePath = QFileDialog::getSaveFileName(this, tr("新建钱包文件"),
+  QString filePath = QFileDialog::getSaveFileName(this, tr("New wallet file"),
   #ifdef Q_OS_WIN
       QApplication::applicationDirPath(),
   #else
       QDir::homePath(),
   #endif
-      tr("钱包(*.wallet)")
+      tr("Wallets (*.wallet)")
       );
 
     if (!filePath.isEmpty() && !filePath.endsWith(".wallet")) {
@@ -224,13 +224,13 @@ void MainWindow::createWallet() {
 }
 
 void MainWindow::openWallet() {
-  QString filePath = QFileDialog::getOpenFileName(this, tr("打开.wallet/.keys文件"),
+  QString filePath = QFileDialog::getOpenFileName(this, tr("Open .wallet/.keys file"),
 #ifdef Q_OS_WIN
     QApplication::applicationDirPath(),
 #else
     QDir::homePath(),
 #endif
-    tr("钱包(*.wallet *.keys)"));
+    tr("Wallet (*.wallet *.keys)"));
 
   if (!filePath.isEmpty()) {
     if (WalletAdapter::instance().isOpen()) {
@@ -243,13 +243,13 @@ void MainWindow::openWallet() {
 }
 
 void MainWindow::backupWallet() {
-  QString filePath = QFileDialog::getSaveFileName(this, tr("备份钱包到..."),
+  QString filePath = QFileDialog::getSaveFileName(this, tr("Backup wallet to..."),
   #ifdef Q_OS_WIN
       QApplication::applicationDirPath(),
   #else
       QDir::homePath(),
   #endif
-      tr("钱包(*.wallet)")
+      tr("Wallets (*.wallet)")
       );
     if (!filePath.isEmpty() && !filePath.endsWith(".wallet")) {
       filePath.append(".wallet");
@@ -319,10 +319,10 @@ void MainWindow::setStatusBarText(const QString& _text) {
 void MainWindow::showMessage(const QString& _text, QtMsgType _type) {
   switch (_type) {
   case QtCriticalMsg:
-    QMessageBox::critical(this, tr("钱包错误"), _text);
+    QMessageBox::critical(this, tr("Wallet error"), _text);
     break;
   case QtDebugMsg:
-    QMessageBox::information(this, tr("钱包"), _text);
+    QMessageBox::information(this, tr("Wallet"), _text);
     break;
   default:
     break;
@@ -343,7 +343,7 @@ void MainWindow::encryptedFlagChanged(bool _encrypted) {
   QString encryptionIconPath = _encrypted ? ":icons/encrypted" : ":icons/decrypted";
   QPixmap encryptionIcon = QPixmap(encryptionIconPath).scaled(16, 16, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
   m_encryptionStateIconLabel->setPixmap(encryptionIcon);
-  QString encryptionLabelTooltip = _encrypted ? tr("已加密") : tr("未加密");
+  QString encryptionLabelTooltip = _encrypted ? tr("Encrypted") : tr("Not encrypted");
   m_encryptionStateIconLabel->setToolTip(encryptionLabelTooltip);
 }
 
@@ -351,19 +351,19 @@ void MainWindow::peerCountUpdated(quint64 _peerCount) {
   QString connectionIconPath = _peerCount > 0 ? ":icons/connected" : ":icons/disconnected";
   QPixmap connectionIcon = QPixmap(connectionIconPath).scaled(16, 16, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
   m_connectionStateIconLabel->setPixmap(connectionIcon);
-  m_connectionStateIconLabel->setToolTip(QString(tr("%1节点").arg(_peerCount)));
+  m_connectionStateIconLabel->setToolTip(QString(tr("%1 peers").arg(_peerCount)));
 }
 
 void MainWindow::walletSynchronizationInProgress() {
   qobject_cast<AnimatedLabel*>(m_synchronizationStateIconLabel)->startAnimation();
-  m_synchronizationStateIconLabel->setToolTip(tr("同步正在进行"));
+  m_synchronizationStateIconLabel->setToolTip(tr("Synchronization in progress"));
 }
 
 void MainWindow::walletSynchronized(int _error, const QString& _error_text) {
   QPixmap syncIcon = QPixmap(":icons/synced").scaled(16, 16, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
   qobject_cast<AnimatedLabel*>(m_synchronizationStateIconLabel)->stopAnimation();
   m_synchronizationStateIconLabel->setPixmap(syncIcon);
-  QString syncLabelTooltip = _error > 0 ? tr("未同步") : tr("已同步");
+  QString syncLabelTooltip = _error > 0 ? tr("Not synchronized") : tr("Synchronized");
   m_synchronizationStateIconLabel->setToolTip(syncLabelTooltip);
 }
 
