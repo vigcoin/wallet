@@ -5,6 +5,7 @@
 #include "CurrencyAdapter.h"
 #include "CryptoNoteWalletConfig.h"
 #include "LoggerAdapter.h"
+#include "cryptonote/core/account.h"
 
 namespace WalletGui {
 
@@ -13,13 +14,17 @@ CurrencyAdapter& CurrencyAdapter::instance() {
   return inst;
 }
 
-CurrencyAdapter::CurrencyAdapter() : m_currency(CryptoNote::CurrencyBuilder(LoggerAdapter::instance().getLoggerManager()).currency()) {
+CurrencyAdapter::CurrencyAdapter() : m_currency(
+  cryptonote::CurrencyBuilder(
+  os::appdata::path(),
+  config::get(),
+  LoggerAdapter::instance().getLoggerManager()).currency()) {
 }
 
 CurrencyAdapter::~CurrencyAdapter() {
 }
 
-const CryptoNote::Currency& CurrencyAdapter::getCurrency() {
+const cryptonote::Currency& CurrencyAdapter::getCurrency() {
   return m_currency;
 }
 
@@ -32,7 +37,7 @@ QString CurrencyAdapter::getCurrencyDisplayName() const {
 }
 
 QString CurrencyAdapter::getCurrencyName() const {
-  return CryptoNote::CRYPTONOTE_NAME;
+  return config::get().name;
 }
 
 QString CurrencyAdapter::getCurrencyTicker() const {
@@ -102,8 +107,8 @@ quint64 CurrencyAdapter::parseAmount(const QString& _amountString) const {
 }
 
 bool CurrencyAdapter::validateAddress(const QString& _address) const {
-  CryptoNote::AccountPublicAddress internalAddress;
-  return m_currency.parseAccountAddressString(_address.toStdString(), internalAddress);
+  cryptonote::account_public_address_t internalAddress;
+  return cryptonote::Account::parseAddress(_address.toStdString(), internalAddress);
 }
 
 }

@@ -29,7 +29,7 @@ private:
   QScopedPointer<Ui::SendFrame> m_ui;
   QList<TransferFrame*> m_transfers;
 
-  void sendTransactionCompleted(CryptoNote::TransactionId _id, bool _error, const QString& _error_text);
+  void sendTransactionCompleted(cryptonote::TransactionId _id, bool _error, const QString& _error_text);
   void walletActualBalanceUpdated(quint64 _balance);
 
   Q_SLOT void addRecipientClicked();

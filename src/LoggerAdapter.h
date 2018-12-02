@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "Logging/LoggerManager.h"
+#include "logging/LoggerManager.h"
 
 namespace WalletGui {
 

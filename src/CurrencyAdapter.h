@@ -6,7 +6,7 @@
 
 #include <QString>
 
-#include "CryptoNoteCore/Currency.h"
+#include "cryptonote/core/currency.h"
 
 namespace WalletGui {
 
@@ -15,7 +15,7 @@ class CurrencyAdapter {
 public:
   static CurrencyAdapter& instance();
 
-  const CryptoNote::Currency& getCurrency();
+  const cryptonote::Currency& getCurrency();
   QString getCurrencyDisplayName() const;
   QString getCurrencyName() const;
   QString getCurrencyTicker() const;
@@ -26,7 +26,7 @@ public:
   bool validateAddress(const QString& _address) const;
 
 private:
-  CryptoNote::Currency m_currency;
+  cryptonote::Currency m_currency;
 
   CurrencyAdapter();
   ~CurrencyAdapter();

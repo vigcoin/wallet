@@ -8,9 +8,9 @@
 #include <QTimer>
 #include <QUrl>
 
-#include <CryptoNoteCore/CoreConfig.h>
-#include <P2p/NetNodeConfig.h>
-#include <Wallet/WalletErrors.h>
+#include <command_line/CoreConfig.h>
+#include <command_line/NetNodeConfig.h>
+#include <wallet/WalletErrors.h>
 
 #include "CurrencyAdapter.h"
 #include "LoggerAdapter.h"
@@ -48,8 +48,8 @@ public:
   ~InProcessNodeInitializer() {
   }
 
-  void start(Node** _node, const CryptoNote::Currency* currency,  INodeCallback* _callback, Logging::LoggerManager* _loggerManager,
-    const CryptoNote::CoreConfig& _coreConfig, const CryptoNote::NetNodeConfig& _netNodeConfig) {
+  void start(Node** _node, const cryptonote::Currency* currency,  INodeCallback* _callback, Logging::LoggerManager* _loggerManager,
+    const cryptonote::CoreConfig& _coreConfig, const cryptonote::NetNodeConfig& _netNodeConfig) {
     (*_node) = createInprocessNode(*currency, *_loggerManager, _coreConfig, _netNodeConfig, *_callback);
     try {
       (*_node)->init([this](std::error_code _err) {
@@ -63,7 +63,7 @@ public:
           QCoreApplication::processEvents();
         });
     } catch (std::runtime_error& err) {
-      Q_EMIT nodeInitFailedSignal(CryptoNote::error::INTERNAL_WALLET_ERROR);
+      Q_EMIT nodeInitFailedSignal(cryptonote::error::INTERNAL_WALLET_ERROR);
       QCoreApplication::processEvents();
       return;
     }
@@ -87,8 +87,8 @@ NodeAdapter& NodeAdapter::instance() {
 NodeAdapter::NodeAdapter() : QObject(), m_node(nullptr), m_nodeInitializerThread(), m_nodeInitializer(new InProcessNodeInitializer) {
   m_nodeInitializer->moveToThread(&m_nodeInitializerThread);
 
-  qRegisterMetaType<CryptoNote::CoreConfig>("CryptoNote::CoreConfig");
-  qRegisterMetaType<CryptoNote::NetNodeConfig>("CryptoNote::NetNodeConfig");
+  qRegisterMetaType<cryptonote::CoreConfig>("cryptonote::CoreConfig");
+  qRegisterMetaType<cryptonote::NetNodeConfig>("cryptonote::NetNodeConfig");
 
   connect(m_nodeInitializer, &InProcessNodeInitializer::nodeInitCompletedSignal, this, &NodeAdapter::nodeInitCompletedSignal, Qt::QueuedConnection);
   connect(this, &NodeAdapter::initNodeSignal, m_nodeInitializer, &InProcessNodeInitializer::start, Qt::QueuedConnection);
@@ -117,14 +117,14 @@ QString NodeAdapter::extractPaymentId(const std::string& _extra) const {
   return QString::fromStdString(m_node->extractPaymentId(_extra));
 }
 
-CryptoNote::IWalletLegacy* NodeAdapter::createWallet() const {
+cryptonote::IWalletLegacy* NodeAdapter::createWallet() const {
   Q_CHECK_PTR(m_node);
   return m_node->createWallet();
 }
 
 bool NodeAdapter::init() {
   Q_ASSERT(m_node == nullptr);
-  QUrl localNodeUrl = QUrl::fromUserInput(QString("127.0.0.1:%1").arg(CryptoNote::RPC_DEFAULT_PORT));
+  QUrl localNodeUrl = QUrl::fromUserInput(QString("127.0.0.1:%1").arg(config::get().net.rpc_port));
 
   m_node = createRpcNode(CurrencyAdapter::instance().getCurrency(), *this, localNodeUrl.host().toStdString(), localNodeUrl.port());
 
@@ -184,8 +184,8 @@ void NodeAdapter::lastKnownBlockHeightUpdated(Node& _node, uint64_t _height) {
 bool NodeAdapter::initInProcessNode() {
   Q_ASSERT(m_node == nullptr);
   m_nodeInitializerThread.start();
-  CryptoNote::CoreConfig coreConfig = makeCoreConfig();
-  CryptoNote::NetNodeConfig netNodeConfig = makeNetNodeConfig();
+  cryptonote::CoreConfig coreConfig = makeCoreConfig();
+  cryptonote::NetNodeConfig netNodeConfig = makeNetNodeConfig();
   Q_EMIT initNodeSignal(&m_node, &CurrencyAdapter::instance().getCurrency(), this, &LoggerAdapter::instance().getLoggerManager(), coreConfig, netNodeConfig);
   QEventLoop waitLoop;
   connect(m_nodeInitializer, &InProcessNodeInitializer::nodeInitCompletedSignal, &waitLoop, &QEventLoop::quit);
@@ -215,8 +215,8 @@ void NodeAdapter::deinit() {
   }
 }
 
-CryptoNote::CoreConfig NodeAdapter::makeCoreConfig() const {
-  CryptoNote::CoreConfig config;
+cryptonote::CoreConfig NodeAdapter::makeCoreConfig() const {
+  cryptonote::CoreConfig config;
   boost::program_options::variables_map options;
   boost::any dataDir = Settings::instance().getDataDir().absolutePath().toStdString();
   options.insert(std::make_pair("data-dir", boost::program_options::variable_value(dataDir, false)));
@@ -224,8 +224,8 @@ CryptoNote::CoreConfig NodeAdapter::makeCoreConfig() const {
   return config;
 }
 
-CryptoNote::NetNodeConfig NodeAdapter::makeNetNodeConfig() const {
-  CryptoNote::NetNodeConfig config;
+cryptonote::NetNodeConfig NodeAdapter::makeNetNodeConfig() const {
+  cryptonote::NetNodeConfig config;
   boost::program_options::variables_map options;
   boost::any p2pBindIp = Settings::instance().getP2pBindIp().toStdString();
   boost::any p2pBindPort = static_cast<uint16_t>(Settings::instance().getP2pBindPort());
@@ -261,7 +261,7 @@ CryptoNote::NetNodeConfig NodeAdapter::makeNetNodeConfig() const {
   options.insert(std::make_pair("data-dir", boost::program_options::variable_value(dataDir, false)));
   int size = options.size();
   config.init(options);
-  config.setTestnet(Settings::instance().isTestnet());
+  config::setType(Settings::instance().isTestnet()?config::TESTNET: config::MAINNET);
   return config;
 }
 

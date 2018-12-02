@@ -9,7 +9,7 @@
 #include <string>
 #include <system_error>
 
-namespace CryptoNote {
+namespace cryptonote {
 
 class INode;
 class IWalletLegacy;
@@ -38,7 +38,7 @@ public:
   virtual uint64_t getLastLocalBlockTimestamp() const = 0;
   virtual uint64_t getPeerCount() const = 0;
 
-  virtual CryptoNote::IWalletLegacy* createWallet() = 0;
+  virtual cryptonote::IWalletLegacy* createWallet() = 0;
 };
 
 class INodeCallback {
@@ -48,8 +48,8 @@ public:
   virtual void lastKnownBlockHeightUpdated(Node& node, uint64_t height) = 0;
 };
 
-Node* createRpcNode(const CryptoNote::Currency& currency, INodeCallback& callback, const std::string& nodeHost, unsigned short nodePort);
-Node* createInprocessNode(const CryptoNote::Currency& currency, Logging::LoggerManager& logManager,
-  const CryptoNote::CoreConfig& coreConfig, const CryptoNote::NetNodeConfig& netNodeConfig, INodeCallback& callback);
+Node* createRpcNode(const cryptonote::Currency& currency, INodeCallback& callback, const std::string& nodeHost, unsigned short nodePort);
+Node* createInprocessNode(const cryptonote::Currency& currency, Logging::LoggerManager& logManager,
+  const cryptonote::CoreConfig& coreConfig, const cryptonote::NetNodeConfig& netNodeConfig, INodeCallback& callback);
 
 }

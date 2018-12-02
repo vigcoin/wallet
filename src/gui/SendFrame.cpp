@@ -61,7 +61,7 @@ void SendFrame::clearAllClicked() {
 }
 
 void SendFrame::sendClicked(void) {
-  QVector<CryptoNote::WalletLegacyTransfer> walletTransfers;
+  QVector<cryptonote::WalletLegacyTransfer> walletTransfers;
   Q_FOREACH (TransferFrame * transfer, m_transfers) {
     QString address = transfer->getAddress();
     if (!CurrencyAdapter::instance().validateAddress(address)) {
@@ -71,7 +71,7 @@ void SendFrame::sendClicked(void) {
       return;
     }
 
-    CryptoNote::WalletLegacyTransfer walletTransfer;
+    cryptonote::WalletLegacyTransfer walletTransfer;
     walletTransfer.address = address.toStdString();
     uint64_t amount = CurrencyAdapter::instance().parseAmount(transfer->getAmountString());
     walletTransfer.amount = amount;
@@ -92,7 +92,7 @@ void SendFrame::mixinValueChanged(int _value) {
   m_ui->m_mixinEdit->setText(QString::number(_value));
 }
 
-void SendFrame::sendTransactionCompleted(CryptoNote::TransactionId _id, bool _error, const QString& _errorText) {
+void SendFrame::sendTransactionCompleted(cryptonote::TransactionId _id, bool _error, const QString& _errorText) {
   Q_UNUSED(_id);
   if (_error) {
     QCoreApplication::postEvent(

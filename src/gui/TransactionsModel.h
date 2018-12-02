@@ -11,7 +11,7 @@
 
 namespace WalletGui {
 
-typedef QPair<CryptoNote::TransactionId, CryptoNote::TransferId> TransactionTransferId;
+typedef QPair<cryptonote::TransactionId, cryptonote::TransferId> TransactionTransferId;
 
 class TransactionsModel : public QAbstractItemModel {
   Q_OBJECT
@@ -44,7 +44,7 @@ public:
 
 private:
   QVector<TransactionTransferId> m_transfers;
-  QHash<CryptoNote::TransactionId, QPair<quint32, quint32> > m_transactionRow;
+  QHash<cryptonote::TransactionId, QPair<quint32, quint32> > m_transactionRow;
 
   TransactionsModel();
   ~TransactionsModel();
@@ -52,13 +52,13 @@ private:
   QVariant getDisplayRole(const QModelIndex& _index) const;
   QVariant getDecorationRole(const QModelIndex& _index) const;
   QVariant getAlignmentRole(const QModelIndex& _index) const;
-  QVariant getUserRole(const QModelIndex& _index, int _role, CryptoNote::TransactionId _transactionId, CryptoNote::WalletLegacyTransaction& _transaction,
-    CryptoNote::TransferId _transferId, CryptoNote::WalletLegacyTransfer& _transfer) const;
+  QVariant getUserRole(const QModelIndex& _index, int _role, cryptonote::TransactionId _transactionId, cryptonote::WalletLegacyTransaction& _transaction,
+    cryptonote::TransferId _transferId, cryptonote::WalletLegacyTransfer& _transfer) const;
 
   void reloadWalletTransactions();
-  void appendTransaction(CryptoNote::TransactionId _id, quint32& _row_count);
-  void appendTransaction(CryptoNote::TransactionId _id);
-  void updateWalletTransaction(CryptoNote::TransactionId _id);
+  void appendTransaction(cryptonote::TransactionId _id, quint32& _row_count);
+  void appendTransaction(cryptonote::TransactionId _id);
+  void updateWalletTransaction(cryptonote::TransactionId _id);
   void localBlockchainUpdated(quint64 _height);
   void reset();
 };

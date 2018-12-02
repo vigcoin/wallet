@@ -12,7 +12,7 @@
 
 #include "CryptoNoteWrapper.h"
 
-namespace CryptoNote {
+namespace cryptonote {
 
 class Currency;
 
@@ -36,7 +36,7 @@ public:
   quintptr getPeerCount() const;
   std::string convertPaymentId(const QString& _payment_id_string) const;
   QString extractPaymentId(const std::string& _extra) const;
-  CryptoNote::IWalletLegacy* createWallet() const;
+  cryptonote::IWalletLegacy* createWallet() const;
 
   bool init();
   void deinit();
@@ -56,16 +56,16 @@ private:
   ~NodeAdapter();
 
   bool initInProcessNode();
-  CryptoNote::CoreConfig makeCoreConfig() const;
-  CryptoNote::NetNodeConfig makeNetNodeConfig() const;
+  cryptonote::CoreConfig makeCoreConfig() const;
+  cryptonote::NetNodeConfig makeNetNodeConfig() const;
 
 Q_SIGNALS:
   void localBlockchainUpdatedSignal(quint64 _height);
   void lastKnownBlockHeightUpdatedSignal(quint64 _height);
   void nodeInitCompletedSignal();
   void peerCountUpdatedSignal(quintptr _count);
-  void initNodeSignal(Node** _node, const CryptoNote::Currency* currency, INodeCallback* _callback, Logging::LoggerManager* _loggerManager,
-    const CryptoNote::CoreConfig& _coreConfig, const CryptoNote::NetNodeConfig& _netNodeConfig);
+  void initNodeSignal(Node** _node, const cryptonote::Currency* currency, INodeCallback* _callback, Logging::LoggerManager* _loggerManager,
+    const cryptonote::CoreConfig& _coreConfig, const cryptonote::NetNodeConfig& _netNodeConfig);
   void deinitNodeSignal(Node** _node);
 };
 

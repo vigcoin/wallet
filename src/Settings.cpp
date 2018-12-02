@@ -9,8 +9,6 @@
 #include <QStandardPaths>
 #include <QTextCodec>
 
-#include <Common/Util.h>
-
 #include "CommandLineParser.h"
 #include "CurrencyAdapter.h"
 #include "Settings.h"

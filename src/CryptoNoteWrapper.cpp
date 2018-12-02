@@ -3,26 +3,27 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include "CryptoNoteWrapper.h"
-#include "CryptoNoteCore/CryptoNoteBasicImpl.h"
-#include "CryptoNoteCore/CryptoNoteFormatUtils.h"
-#include "CryptoNoteCore/Currency.h"
+#include "common/binary_array.h"
+#include "config/common.h"
+#include "cryptonote/core/CryptoNoteFormatUtils.h"
+#include "cryptonote/core/currency.h"
 #include "NodeRpcProxy/NodeRpcProxy.h"
-#include "CryptoNoteCore/CoreConfig.h"
-#include "P2p/NetNodeConfig.h"
-#include "CryptoNoteCore/Core.h"
-#include "CryptoNoteProtocol/CryptoNoteProtocolHandler.h"
+#include "command_line/CoreConfig.h"
+#include "command_line/NetNodeConfig.h"
+#include "cryptonote/core/core.h"
+#include "cryptonote/protocol/handler.h"
 #include "InProcessNode/InProcessNode.h"
-#include "P2p/NetNode.h"
-#include "WalletLegacy/WalletLegacy.h"
-#include "Logging/LoggerManager.h"
-#include "System/Dispatcher.h"
+#include "p2p/NetNode.h"
+#include "wallet_legacy/WalletLegacy.h"
+#include "logging/LoggerManager.h"
+#include "system/Dispatcher.h"
 
 namespace WalletGui {
 
 namespace {
 
-bool parsePaymentId(const std::string& payment_id_str, Crypto::Hash& payment_id) {
-  return CryptoNote::parsePaymentId(payment_id_str, payment_id);
+bool parsePaymentId(const std::string& payment_id_str, crypto::hash_t& payment_id) {
+  return cryptonote::parsePaymentId(payment_id_str, payment_id);
 }
 
 std::string convertPaymentId(const std::string& paymentIdString) {
@@ -30,7 +31,7 @@ std::string convertPaymentId(const std::string& paymentIdString) {
     return "";
   }
 
-  Crypto::Hash paymentId;
+  crypto::hash_t paymentId;
   if (!parsePaymentId(paymentIdString, paymentId)) {
     std::stringstream errorStr;
     errorStr << "Payment id has invalid format: \"" + paymentIdString + "\", expected 64-character string";
@@ -38,9 +39,9 @@ std::string convertPaymentId(const std::string& paymentIdString) {
   }
 
   std::vector<uint8_t> extra;
-  CryptoNote::BinaryArray extraNonce;
-  CryptoNote::setPaymentIdToTransactionExtraNonce(extraNonce, paymentId);
-  if (!CryptoNote::addExtraNonceToTransactionExtra(extra, extraNonce)) {
+  binary_array_t extraNonce;
+  cryptonote::setPaymentIdToTransactionExtraNonce(extraNonce, paymentId);
+  if (!cryptonote::addExtraNonceToTransactionExtra(extra, extraNonce)) {
     std::stringstream errorStr;
     errorStr << "Something went wrong with payment_id. Please check its format: \"" + paymentIdString + "\", expected 64-character string";
     throw std::runtime_error(errorStr.str());
@@ -50,19 +51,19 @@ std::string convertPaymentId(const std::string& paymentIdString) {
 }
 
 std::string extractPaymentId(const std::string& extra) {
-  std::vector<CryptoNote::TransactionExtraField> extraFields;
+  std::vector<cryptonote::transaction_extra_field_t> extraFields;
   std::vector<uint8_t> extraVector;
   std::copy(extra.begin(), extra.end(), std::back_inserter(extraVector));
 
-  if (!CryptoNote::parseTransactionExtra(extraVector, extraFields)) {
+  if (!cryptonote::parseTransactionExtra(extraVector, extraFields)) {
     throw std::runtime_error("Can't parse extra");
   }
 
   std::string result;
-  CryptoNote::TransactionExtraNonce extraNonce;
-  if (CryptoNote::findTransactionExtraFieldByType(extraFields, extraNonce)) {
-    Crypto::Hash paymentIdHash;
-    if (CryptoNote::getPaymentIdFromTransactionExtraNonce(extraNonce.nonce, paymentIdHash)) {
+  cryptonote::transaction_extra_nonce_t extraNonce;
+  if (cryptonote::findTransactionExtraFieldByType(extraFields, extraNonce)) {
+    crypto::hash_t paymentIdHash;
+    if (cryptonote::getPaymentIdFromTransactionExtraNonce(extraNonce.nonce, paymentIdHash)) {
       unsigned char* buff = reinterpret_cast<unsigned char *>(&paymentIdHash);
       for (size_t i = 0; i < sizeof(paymentIdHash); ++i) {
         result.push_back("0123456789ABCDEF"[buff[i] >> 4]);
@@ -80,9 +81,9 @@ std::string extractPaymentId(const std::string& extra) {
 Node::~Node() {
 }
 
-class RpcNode : CryptoNote::INodeObserver, public Node {
+class RpcNode : cryptonote::INodeObserver, public Node {
 public:
-  RpcNode(const CryptoNote::Currency& currency, INodeCallback& callback, const std::string& nodeHost, unsigned short nodePort) :
+  RpcNode(const cryptonote::Currency& currency, INodeCallback& callback, const std::string& nodeHost, unsigned short nodePort) :
     m_callback(callback),
     m_currency(currency),
     m_node(nodeHost, nodePort) {
@@ -123,14 +124,14 @@ public:
     return m_node.getPeerCount();
   }
 
-  CryptoNote::IWalletLegacy* createWallet() override {
-    return new CryptoNote::WalletLegacy(m_currency, m_node);
+  cryptonote::IWalletLegacy* createWallet() override {
+    return new cryptonote::WalletLegacy(m_currency, m_node);
   }
 
 private:
   INodeCallback& m_callback;
-  const CryptoNote::Currency& m_currency;
-  CryptoNote::NodeRpcProxy m_node;
+  const cryptonote::Currency& m_currency;
+  cryptonote::NodeRpcProxy m_node;
 
   void peerCountUpdated(size_t count) {
     m_callback.peerCountUpdated(*this, count);
@@ -145,13 +146,12 @@ private:
   }
 };
 
-class InprocessNode : CryptoNote::INodeObserver, public Node {
+class InprocessNode : cryptonote::INodeObserver, public Node {
 public:
-  InprocessNode(const CryptoNote::Currency& currency, Logging::LoggerManager& logManager, const CryptoNote::CoreConfig& coreConfig,
-    const CryptoNote::NetNodeConfig& netNodeConfig, INodeCallback& callback) :
+  InprocessNode(const cryptonote::Currency& currency, Logging::LoggerManager& logManager, const cryptonote::CoreConfig& coreConfig,
+    const cryptonote::NetNodeConfig& netNodeConfig, INodeCallback& callback) :
     m_currency(currency), m_dispatcher(),
     m_callback(callback),
-    m_coreConfig(coreConfig),
     m_netNodeConfig(netNodeConfig),
     m_protocolHandler(currency, m_dispatcher, m_core, nullptr, logManager),
     m_core(currency, &m_protocolHandler, logManager),
@@ -160,9 +160,9 @@ public:
 
     m_core.set_cryptonote_protocol(&m_protocolHandler);
     m_protocolHandler.set_p2p_endpoint(&m_nodeServer);
-    CryptoNote::Checkpoints checkpoints(logManager);
-    for (const CryptoNote::CheckpointData& checkpoint : CryptoNote::CHECKPOINTS) {
-      checkpoints.add_checkpoint(checkpoint.height, checkpoint.blockId);
+    cryptonote::Checkpoints checkpoints(logManager);
+    for (const config::checkpoint_data_t & checkpoint : config::get().checkpoints) {
+      checkpoints.add(checkpoint.height, checkpoint.blockId);
     }
   }
 
@@ -172,17 +172,17 @@ public:
 
   void init(const std::function<void(std::error_code)>& callback) override {
     try {
-      if (!m_core.init(m_coreConfig, CryptoNote::MinerConfig(), true)) {
-        callback(make_error_code(CryptoNote::error::NOT_INITIALIZED));
+      if (!m_core.init(cryptonote::MinerConfig(), true)) {
+        callback(make_error_code(cryptonote::error::NOT_INITIALIZED));
         return;
       }
 
       if (!m_nodeServer.init(m_netNodeConfig)) {
-        callback(make_error_code(CryptoNote::error::NOT_INITIALIZED));
+        callback(make_error_code(cryptonote::error::NOT_INITIALIZED));
         return;
       }
     } catch (std::runtime_error& _err) {
-      callback(make_error_code(CryptoNote::error::NOT_INITIALIZED));
+      callback(make_error_code(cryptonote::error::NOT_INITIALIZED));
       return;
     }
 
@@ -224,20 +224,19 @@ public:
     return m_node.getPeerCount();
   }
 
-  CryptoNote::IWalletLegacy* createWallet() override {
-    return new CryptoNote::WalletLegacy(m_currency, m_node);
+  cryptonote::IWalletLegacy* createWallet() override {
+    return new cryptonote::WalletLegacy(m_currency, m_node);
   }
 
 private:
   INodeCallback& m_callback;
-  const CryptoNote::Currency& m_currency;
+  const cryptonote::Currency& m_currency;
   System::Dispatcher m_dispatcher;
-  CryptoNote::CoreConfig m_coreConfig;
-  CryptoNote::NetNodeConfig m_netNodeConfig;
-  CryptoNote::core m_core;
-  CryptoNote::CryptoNoteProtocolHandler m_protocolHandler;
-  CryptoNote::NodeServer m_nodeServer;
-  CryptoNote::InProcessNode m_node;
+  cryptonote::NetNodeConfig m_netNodeConfig;
+  cryptonote::core m_core;
+  cryptonote::CryptoNoteProtocolHandler m_protocolHandler;
+  cryptonote::NodeServer m_nodeServer;
+  cryptonote::InProcessNode m_node;
   std::future<bool> m_nodeServerFuture;
 
   void peerCountUpdated(size_t count) {
@@ -253,12 +252,12 @@ private:
   }
 };
 
-Node* createRpcNode(const CryptoNote::Currency& currency, INodeCallback& callback, const std::string& nodeHost, unsigned short nodePort) {
+Node* createRpcNode(const cryptonote::Currency& currency, INodeCallback& callback, const std::string& nodeHost, unsigned short nodePort) {
   return new RpcNode(currency, callback, nodeHost, nodePort);
 }
 
-Node* createInprocessNode(const CryptoNote::Currency& currency, Logging::LoggerManager& logManager,
-  const CryptoNote::CoreConfig& coreConfig, const CryptoNote::NetNodeConfig& netNodeConfig, INodeCallback& callback) {
+Node* createInprocessNode(const cryptonote::Currency& currency, Logging::LoggerManager& logManager,
+  const cryptonote::CoreConfig& coreConfig, const cryptonote::NetNodeConfig& netNodeConfig, INodeCallback& callback) {
   return new InprocessNode(currency, logManager, coreConfig, netNodeConfig, callback);
 }
 

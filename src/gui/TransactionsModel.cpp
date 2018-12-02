@@ -46,7 +46,7 @@ TransactionsModel::TransactionsModel() : QAbstractItemModel() {
   connect(&WalletAdapter::instance(), &WalletAdapter::reloadWalletTransactionsSignal, this, &TransactionsModel::reloadWalletTransactions,
     Qt::QueuedConnection);
   connect(&WalletAdapter::instance(), &WalletAdapter::walletTransactionCreatedSignal, this,
-    static_cast<void(TransactionsModel::*)(CryptoNote::TransactionId)>(&TransactionsModel::appendTransaction), Qt::QueuedConnection);
+    static_cast<void(TransactionsModel::*)(cryptonote::TransactionId)>(&TransactionsModel::appendTransaction), Qt::QueuedConnection);
   connect(&WalletAdapter::instance(), &WalletAdapter::walletTransactionUpdatedSignal, this, &TransactionsModel::updateWalletTransaction,
     Qt::QueuedConnection);
   connect(&NodeAdapter::instance(), &NodeAdapter::localBlockchainUpdatedSignal, this, &TransactionsModel::localBlockchainUpdated,
@@ -120,13 +120,13 @@ QVariant TransactionsModel::data(const QModelIndex& _index, int _role) const {
     return QVariant();
   }
 
-  CryptoNote::WalletLegacyTransaction transaction;
-  CryptoNote::WalletLegacyTransfer transfer;
-  CryptoNote::TransactionId transactionId = m_transfers.value(_index.row()).first;
-  CryptoNote::TransferId transferId = m_transfers.value(_index.row()).second;
+  cryptonote::WalletLegacyTransaction transaction;
+  cryptonote::WalletLegacyTransfer transfer;
+  cryptonote::TransactionId transactionId = m_transfers.value(_index.row()).first;
+  cryptonote::TransferId transferId = m_transfers.value(_index.row()).second;
 
   if(!WalletAdapter::instance().getTransaction(transactionId, transaction) ||
-    (m_transfers.value(_index.row()).second != CryptoNote::WALLET_LEGACY_INVALID_TRANSFER_ID &&
+    (m_transfers.value(_index.row()).second != cryptonote::WALLET_LEGACY_INVALID_TRANSFER_ID &&
     !WalletAdapter::instance().getTransfer(transferId, transfer))) {
     return QVariant();
   }
@@ -255,8 +255,8 @@ QVariant TransactionsModel::getAlignmentRole(const QModelIndex& _index) const {
   return headerData(_index.column(), Qt::Horizontal, Qt::TextAlignmentRole);
 }
 
-QVariant TransactionsModel::getUserRole(const QModelIndex& _index, int _role, CryptoNote::TransactionId _transactionId,
-  CryptoNote::WalletLegacyTransaction& _transaction, CryptoNote::TransferId _transferId, CryptoNote::WalletLegacyTransfer& _transfer) const {
+QVariant TransactionsModel::getUserRole(const QModelIndex& _index, int _role, cryptonote::TransactionId _transactionId,
+  cryptonote::WalletLegacyTransaction& _transaction, cryptonote::TransferId _transferId, cryptonote::WalletLegacyTransfer& _transfer) const {
   switch(_role) {
   case ROLE_DATE:
     return (_transaction.timestamp > 0 ? QDateTime::fromTime_t(_transaction.timestamp) : QDateTime());
@@ -281,7 +281,7 @@ QVariant TransactionsModel::getUserRole(const QModelIndex& _index, int _role, Cr
     return QString::fromStdString(_transfer.address);
 
   case ROLE_AMOUNT:
-    return static_cast<qint64>(_transferId == CryptoNote::WALLET_LEGACY_INVALID_TRANSFER_ID ? _transaction.totalAmount : -_transfer.amount);
+    return static_cast<qint64>(_transferId == cryptonote::WALLET_LEGACY_INVALID_TRANSFER_ID ? _transaction.totalAmount : -_transfer.amount);
 
   case ROLE_PAYMENT_ID:
     return NodeAdapter::instance().extractPaymentId(_transaction.extra);
@@ -301,7 +301,7 @@ QVariant TransactionsModel::getUserRole(const QModelIndex& _index, int _role, Cr
     return static_cast<quint64>(_transaction.fee);
 
   case ROLE_NUMBER_OF_CONFIRMATIONS:
-    return (_transaction.blockHeight == CryptoNote::WALLET_LEGACY_UNCONFIRMED_TRANSACTION_HEIGHT ? 0 :
+    return (_transaction.blockHeight == cryptonote::WALLET_LEGACY_UNCONFIRMED_TRANSACTION_HEIGHT ? 0 :
       NodeAdapter::instance().getLastKnownBlockHeight() - _transaction.blockHeight + 1);
 
   case ROLE_COLUMN:
@@ -321,7 +321,7 @@ void TransactionsModel::reloadWalletTransactions() {
   endResetModel();
 
   quint32 row_count = 0;
-  for (CryptoNote::TransactionId transactionId = 0; transactionId < WalletAdapter::instance().getTransactionCount(); ++transactionId) {
+  for (cryptonote::TransactionId transactionId = 0; transactionId < WalletAdapter::instance().getTransactionCount(); ++transactionId) {
     appendTransaction(transactionId, row_count);
   }
 
@@ -331,27 +331,27 @@ void TransactionsModel::reloadWalletTransactions() {
   }
 }
 
-void TransactionsModel::appendTransaction(CryptoNote::TransactionId _transactionId, quint32& _insertedRowCount) {
-  CryptoNote::WalletLegacyTransaction transaction;
+void TransactionsModel::appendTransaction(cryptonote::TransactionId _transactionId, quint32& _insertedRowCount) {
+  cryptonote::WalletLegacyTransaction transaction;
   if (!WalletAdapter::instance().getTransaction(_transactionId, transaction)) {
     return;
   }
 
   if (transaction.transferCount) {
     m_transactionRow[_transactionId] = qMakePair(m_transfers.size(), transaction.transferCount);
-    for (CryptoNote::TransferId transfer_id = transaction.firstTransferId;
+    for (cryptonote::TransferId transfer_id = transaction.firstTransferId;
       transfer_id < transaction.firstTransferId + transaction.transferCount; ++transfer_id) {
       m_transfers.append(TransactionTransferId(_transactionId, transfer_id));
       ++_insertedRowCount;
     }
   } else {
-    m_transfers.append(TransactionTransferId(_transactionId, CryptoNote::WALLET_LEGACY_INVALID_TRANSFER_ID));
+    m_transfers.append(TransactionTransferId(_transactionId, cryptonote::WALLET_LEGACY_INVALID_TRANSFER_ID));
     m_transactionRow[_transactionId] = qMakePair(m_transfers.size() - 1, 1);
     ++_insertedRowCount;
   }
 }
 
-void TransactionsModel::appendTransaction(CryptoNote::TransactionId _transactionId) {
+void TransactionsModel::appendTransaction(cryptonote::TransactionId _transactionId) {
   if (m_transactionRow.contains(_transactionId)) {
     return;
   }
@@ -368,7 +368,7 @@ void TransactionsModel::appendTransaction(CryptoNote::TransactionId _transaction
   }
 }
 
-void TransactionsModel::updateWalletTransaction(CryptoNote::TransactionId _id) {
+void TransactionsModel::updateWalletTransaction(cryptonote::TransactionId _id) {
   quint32 firstRow = m_transactionRow.value(_id).first;
   quint32 lastRow = firstRow + m_transactionRow.value(_id).second - 1;
   Q_EMIT dataChanged(index(firstRow, COLUMN_DATE), index(lastRow, COLUMN_DATE));
