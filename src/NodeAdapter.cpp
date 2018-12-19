@@ -226,6 +226,11 @@ cryptonote::CoreConfig NodeAdapter::makeCoreConfig() const {
 
 cryptonote::NetNodeConfig NodeAdapter::makeNetNodeConfig() const {
   cryptonote::NetNodeConfig config;
+  
+  boost::program_options::options_description desc;
+
+  config.initOptions(desc);
+
   boost::program_options::variables_map options;
   boost::any p2pBindIp = Settings::instance().getP2pBindIp().toStdString();
   boost::any p2pBindPort = static_cast<uint16_t>(Settings::instance().getP2pBindPort());
