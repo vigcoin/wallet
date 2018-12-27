@@ -15,5 +15,6 @@ before_build:
     - mkdir build
     - cd build
     - cmake -G "Visual Studio 15 2017 Win64" ..
+    - dir
 build:
   project: $(APPVEYOR_BUILD_FOLDER)\build\$(APPVEYOR_PROJECT_NAME).sln
