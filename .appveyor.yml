@@ -8,6 +8,8 @@ configuration:
   - Debug
 install:
     - git submodule update --init --recursive
+    - set QTDIR=C:\Qt\5.11\msvc2017_64
+    - set PATH=%PATH%;%QTDIR%\bin
 before_build:
     - cmake -G "Visual Studio 15 2017 Win64" .
 build:
