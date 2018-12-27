@@ -13,7 +13,7 @@ install:
     - cmd: set BOOST_ROOT=C:\Libraries\boost_1_67_0
     - cmd: set PATH=%PATH%;%QTDIR%\bin
     - sh: sudo apt-get update
-    - sh: sudo apt install -y build-essential curl cmake libboost-all-dev libssl-dev libsodium-dev python-pip python-dev lcov git mercurial
+    - sh: sudo apt install -y build-essential curl cmake libboost-all-dev libssl-dev libsodium-dev qt5-default python-pip python-dev lcov git mercurial
 before_build:
     - mkdir build
     - cd build
@@ -21,8 +21,6 @@ before_build:
     - cmd: dir
     - sh: cmake ..
     - sh: ls
+    - sh: make
 build:
   project: $(APPVEYOR_BUILD_FOLDER)\build\vigcoin.sln
-build_script:
-  - sh: cd build
-  - sh: make
