@@ -1,6 +1,7 @@
 version: 1.0.{build}
 image:
 - Visual Studio 2017
+- ubuntu
 platform:
   - x64
 configuration:
@@ -8,13 +9,20 @@ configuration:
   - Debug
 install:
     - git submodule update --init --recursive
-    - set QTDIR=C:\Qt\5.11\msvc2017_64
-    - set BOOST_ROOT=C:\Libraries\boost_1_67_0
-    - set PATH=%PATH%;%QTDIR%\bin
+    - cmd: set QTDIR=C:\Qt\5.11\msvc2017_64
+    - cmd: set BOOST_ROOT=C:\Libraries\boost_1_67_0
+    - cmd: set PATH=%PATH%;%QTDIR%\bin
+    - sh: sudo apt-get update
+    - sh: sudo apt install -y build-essential curl cmake libboost-all-dev libssl-dev libsodium-dev python-pip python-dev lcov git mercurial
 before_build:
     - mkdir build
     - cd build
-    - cmake -G "Visual Studio 15 2017 Win64" ..
-    - dir
+    - cmd: cmake -G "Visual Studio 15 2017 Win64" ..
+    - cmd: dir
+    - sh: cmake ..
+    - sh: ls
 build:
   project: $(APPVEYOR_BUILD_FOLDER)\build\vigcoin.sln
+build_script:
+  - sh: cd build
+  - sh: make
