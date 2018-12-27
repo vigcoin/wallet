@@ -1,5 +1,6 @@
 VIG WALLET
 ===
+[![Build status](https://ci.appveyor.com/api/projects/status/b86pdx2x1wyaxmwv?svg=true)](https://ci.appveyor.com/project/calidion/wallet)
 
 **1. Clone wallet sources**
 
