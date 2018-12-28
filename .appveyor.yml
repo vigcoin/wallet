@@ -23,16 +23,15 @@ before_build:
     - sh: ls
     - sh: make
 for:
--
-  matrix:
-    only:
-      - image: Visual Studio 2017
-  build:
-    project: $(APPVEYOR_BUILD_FOLDER)\build\vigcoin.sln
-for:
--
-  matrix:
-    only:
-      - image: ubuntu
-  build_script:
-    - sh: cd build && make
+  -
+    matrix:
+      only:
+        - image: Visual Studio 2017
+    build:
+      project: $(APPVEYOR_BUILD_FOLDER)\build\vigcoin.sln
+  -
+    matrix:
+      only:
+        - image: ubuntu
+    build_script:
+      - sh: cd build && make
