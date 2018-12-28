@@ -6,7 +6,7 @@ platform:
   - x64
 configuration:
   - Release
-  - Debug
+  # - Debug
 install:
     - git submodule update --init --recursive
     - cmd: set QTDIR=C:\Qt\5.11\msvc2017_64
@@ -21,7 +21,6 @@ before_build:
     - cmd: dir
     - sh: cmake ..
     - sh: ls
-    - sh: make
 for:
   -
     matrix:
@@ -34,4 +33,4 @@ for:
       only:
         - image: ubuntu
     build_script:
-      - sh: cd build && make
+      - sh: make
