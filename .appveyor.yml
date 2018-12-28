@@ -22,5 +22,10 @@ before_build:
     - sh: cmake ..
     - sh: ls
     - sh: make
-build:
-  project: $(APPVEYOR_BUILD_FOLDER)\build\vigcoin.sln
+for:
+-
+  matrix:
+    only:
+      - image: Visual Studio 2017
+  build:
+    project: $(APPVEYOR_BUILD_FOLDER)\build\vigcoin.sln
