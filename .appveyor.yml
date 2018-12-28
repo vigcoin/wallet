@@ -29,3 +29,10 @@ for:
       - image: Visual Studio 2017
   build:
     project: $(APPVEYOR_BUILD_FOLDER)\build\vigcoin.sln
+for:
+-
+  matrix:
+    only:
+      - image: ubuntu
+  build_script:
+    - sh: cd build && make
