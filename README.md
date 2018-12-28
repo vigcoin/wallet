@@ -9,9 +9,11 @@ VIG WALLET
 git clone https://github.com/vigcoin/wallet.git
 ```
 
-**2. Get submodule update
+**2. Get submodule update**
 
+```
 git submodule update --init --recursive
+```
 
 **3. Build**
 
