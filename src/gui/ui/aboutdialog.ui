@@ -41,7 +41,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;版本 %1&lt;/p&gt;&lt;p&gt;Vig Coin是基于CryptoNote的新加密币，它的目标是促进加密币在现实里的应用。&lt;/p&gt;&lt;p&gt;Copyright (c) 2012-2015. CryptoNote开发者, Vig开发者&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;http://opensource.org/licenses/MIT&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://opensource.org/licenses/MIT&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://vigcoin.org/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://cryptonote.org/&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;版本 %1&lt;/p&gt;&lt;p&gt;Vig Coin是基于CryptoNote的新加密币，它的目标是促进加密币在现实里的应用。&lt;/p&gt;&lt;p&gt;Copyright (c) 2012-2015. CryptoNote开发者, Vig开发者&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://vigcoin.org&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://vigcoin.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://opensource.org/search/node/licenses%20GPL&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://opensource.org/search/node/licenses GPL&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="textFormat">
       <enum>Qt::RichText</enum>
