@@ -250,39 +250,6 @@ include_directories(cryptonote/src/platform/${PLATFORM_DIR})
 file(GLOB PLATFORM_SOURCES "cryptonote/src/platform/${PLATFORM_DIR}/system/*")
 set(CRYPTONOTE_SOURCES ${CRYPTONOTE_SOURCES} ${PLATFORM_SOURCES})
 
-# Translation files
-SET(TS_FILES
-    src/languages/en.ts
-    src/languages/zh_CN.ts
-    src/languages/zh_TW.ts
-)
-file(GLOB TS_FILES "${PROJECT_SOURCE_DIR}/src/languages/*.ts")
-
-qt5_create_translation(QM_FILES
-    ${PROJECT_SOURCE_DIR}
-    ${TS_FILES}
-    OPTIONS -source-language en_US -no-obsolete)
-    
-qt5_add_translation(QM_FILES ${TS_FILES})
-add_custom_target(translations DEPENDS ${QM_FILES})
-
-if(NOT QT_TRANSLATIONS_DIR)
-    # If this directory is missing, we are in a Qt5 environment.
-    # Extract the qmake executable location
-    get_target_property(QT5_QMAKE_EXECUTABLE Qt5::qmake IMPORTED_LOCATION)
-    # Ask Qt5 where to put the translations
-    execute_process( COMMAND ${QT5_QMAKE_EXECUTABLE} -query QT_INSTALL_TRANSLATIONS
-            OUTPUT_VARIABLE qt_translations_dir OUTPUT_STRIP_TRAILING_WHITESPACE )
-    # make sure we have / and not \ as qmake gives on windows
-    file( TO_CMAKE_PATH "${qt_translations_dir}" qt_translations_dir)
-    set( QT_TRANSLATIONS_DIR ${qt_translations_dir} CACHE PATH
-            "The location of the Qt translations" FORCE)
-endif()
-
-install(FILES ${QM_FILES}
-        DESTINATION ${QT_TRANSLATIONS_DIR})
-
-
 add_library(${CRYPTONOTE_LIB} STATIC ${CRYPTONOTE_SOURCES})
 set_target_properties(${CRYPTONOTE_LIB} PROPERTIES COMPILE_DEFINITIONS _GNU_SOURCE)
 target_link_libraries(${CRYPTONOTE_LIB} ${Boost_LIBRARIES})
