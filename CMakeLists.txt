@@ -18,6 +18,7 @@ include_directories(${CMAKE_BINARY_DIR}
     cryptonote/src/crypto
     cryptonote/src)
 
+find_package(Qt5LinguistTools REQUIRED)
 find_package(Qt5Gui REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 
@@ -28,7 +29,7 @@ else(WIN32)
   set(Boost_USE_STATIC_RUNTIME ON)
 endif(WIN32)
 
-find_package(Boost 1.55 REQUIRED COMPONENTS date_time filesystem program_options regex serialization system thread chrono)
+find_package(Boost 1.58 REQUIRED COMPONENTS date_time filesystem program_options regex serialization system thread chrono)
 if ((${Boost_MAJOR_VERSION} EQUAL 1) AND (${Boost_MINOR_VERSION} EQUAL 54))
 	message(SEND_ERROR "Boost version 1.54 is unsupported, more details are available here http://goo.gl/RrCFmA")
 endif ()
@@ -40,7 +41,7 @@ set(VERSION "1.0")
 configure_file("cryptonote/src/version.h.in" "version.h")
 configure_file("src/CryptoNoteWalletConfig.h.in" "CryptoNoteWalletConfig.h")
 
-add_definitions(-DGIT_REVISION=\"${GIT_REVISION}\")
+add_definitions(-DGIT_REVISION="${GIT_REVISION}")
 
 set(CMAKE_AUTOMOC ON)
 
@@ -186,9 +187,9 @@ set(CRYPTONOTE_SOURCES
   cryptonote/src/blockchain_explorer/BlockchainExplorerErrors.cpp
 )
 
-file(GLOB_RECURSE SOURCES src/*.cpp)
-file(GLOB_RECURSE HEADERS src/*.h)
-file(GLOB_RECURSE FORMS src/gui/ui/*.ui)
+file(GLOB_RECURSE SOURCES "src/*.cpp")
+file(GLOB_RECURSE HEADERS "src/*.h")
+file(GLOB_RECURSE FORMS "src/gui/ui/*.ui")
 
 set(QRC src/resources.qrc)
 
@@ -212,7 +213,7 @@ elseif (UNIX)
   set(CRYPTONOTE_SOURCES ${CRYPTONOTE_SOURCES} cryptonote/external/miniupnpc/minissdpc.c)
   if (APPLE)
     enable_language(ASM)
-    file(GLOB_RECURSE OBJC_SOURCES src/*.mm)
+    file(GLOB_RECURSE OBJC_SOURCES "src/*.mm")
     set(SOURCES ${SOURCES} ${OBJC_SOURCES})
     set(PLATFORM_DIR OSX)
     set(MACOSX_BUNDLE_INFO_STRING "Cryptonote GUI wallet")
@@ -246,14 +247,47 @@ elseif (UNIX)
 endif ()
 
 include_directories(cryptonote/src/platform/${PLATFORM_DIR})
-file(GLOB PLATFORM_SOURCES cryptonote/src/platform/${PLATFORM_DIR}/system/*)
+file(GLOB PLATFORM_SOURCES "cryptonote/src/platform/${PLATFORM_DIR}/system/*")
 set(CRYPTONOTE_SOURCES ${CRYPTONOTE_SOURCES} ${PLATFORM_SOURCES})
+
+# Translation files
+SET(TS_FILES
+    src/languages/en.ts
+    src/languages/zh_CN.ts
+    src/languages/zh_TW.ts
+)
+file(GLOB TS_FILES "${PROJECT_SOURCE_DIR}/src/languages/*.ts")
+
+qt5_create_translation(QM_FILES
+    ${PROJECT_SOURCE_DIR}
+    ${TS_FILES}
+    OPTIONS -source-language en_US -no-obsolete)
+    
+qt5_add_translation(QM_FILES ${TS_FILES})
+add_custom_target(translations DEPENDS ${QM_FILES})
+
+if(NOT QT_TRANSLATIONS_DIR)
+    # If this directory is missing, we are in a Qt5 environment.
+    # Extract the qmake executable location
+    get_target_property(QT5_QMAKE_EXECUTABLE Qt5::qmake IMPORTED_LOCATION)
+    # Ask Qt5 where to put the translations
+    execute_process( COMMAND ${QT5_QMAKE_EXECUTABLE} -query QT_INSTALL_TRANSLATIONS
+            OUTPUT_VARIABLE qt_translations_dir OUTPUT_STRIP_TRAILING_WHITESPACE )
+    # make sure we have / and not \ as qmake gives on windows
+    file( TO_CMAKE_PATH "${qt_translations_dir}" qt_translations_dir)
+    set( QT_TRANSLATIONS_DIR ${qt_translations_dir} CACHE PATH
+            "The location of the Qt translations" FORCE)
+endif()
+
+install(FILES ${QM_FILES}
+        DESTINATION ${QT_TRANSLATIONS_DIR})
+
 
 add_library(${CRYPTONOTE_LIB} STATIC ${CRYPTONOTE_SOURCES})
 set_target_properties(${CRYPTONOTE_LIB} PROPERTIES COMPILE_DEFINITIONS _GNU_SOURCE)
 target_link_libraries(${CRYPTONOTE_LIB} ${Boost_LIBRARIES})
 
-add_executable(${PROJECT_NAME} ${BUILD_PLATFORM} ${BUILD_RESOURCES} ${SOURCES} ${HEADERS} ${UIS} ${RCC})
+add_executable(${PROJECT_NAME} ${BUILD_PLATFORM} ${BUILD_RESOURCES} ${SOURCES} ${HEADERS} ${UIS} ${RCC} ${QM_FILES})
 set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_DEFINITIONS _GNU_SOURCE)
 target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES} ${QTMAIN} ${CRYPTONOTE_LIB})
 

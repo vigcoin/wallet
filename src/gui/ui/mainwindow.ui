@@ -110,7 +110,7 @@
      <x>0</x>
      <y>0</y>
      <width>920</width>
-     <height>27</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -132,6 +132,8 @@
     <addaction name="m_startOnLoginAction"/>
     <addaction name="m_minimizeToTrayAction"/>
     <addaction name="m_closeToTrayAction"/>
+    <addaction name="separator"/>
+    <addaction name="actionSetting"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -334,6 +336,11 @@
    </property>
    <property name="text">
     <string>关闭成图标</string>
+   </property>
+  </action>
+  <action name="actionSetting">
+   <property name="text">
+    <string>设置</string>
    </property>
   </action>
  </widget>
