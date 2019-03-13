@@ -7,7 +7,7 @@ VIG WALLET
 ## Ubuntu Environment Setup
 
 ```
-sudo apt install -y build-essential curl cmake libboost-all-dev libssl-dev libsodium-dev qt5-default python-pip python-dev lcov git mercurial
+sudo apt install -y build-essential curl cmake libboost-all-dev libssl-dev libsodium-dev qt5-default qttools5-dev python-pip python-dev lcov git mercurial
 ```
 
 **1. Clone wallet sources**
