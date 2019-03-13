@@ -135,6 +135,7 @@ set(CRYPTONOTE_SOURCES
   cryptonote/src/serialization/KVBinaryInputStreamSerializer.cpp
   cryptonote/src/serialization/KVBinaryOutputStreamSerializer.cpp
   cryptonote/src/serialization/SerializationOverloads.cpp
+  cryptonote/src/serialization/BlockchainExplorerDataSerialization.cpp
   cryptonote/src/transfers/BlockchainSynchronizer.cpp
   cryptonote/src/transfers/SynchronizationState.cpp
   cryptonote/src/transfers/TransfersConsumer.cpp
