@@ -15,6 +15,7 @@ include_directories(${CMAKE_BINARY_DIR}
     cryptonote/external
     cryptonote/include
     cryptonote/contrib/epee/include
+    cryptonote/src/common
     cryptonote/src/crypto
     cryptonote/src)
 
@@ -79,7 +80,7 @@ set(CRYPTONOTE_SOURCES
   cryptonote/src/crypto/chacha.c
   cryptonote/src/crypto/crypto-ops-data.c
   cryptonote/src/crypto/crypto-ops.c
-  cryptonote/src/crypto/crypto.cpp
+  cryptonote/src/crypto/crypto.c
   cryptonote/src/crypto/groestl.c
   cryptonote/src/crypto/hash-extra-blake.c
   cryptonote/src/crypto/hash-extra-groestl.c
@@ -122,6 +123,7 @@ set(CRYPTONOTE_SOURCES
   cryptonote/src/cryptonote/core/blockchain/serializer/crypto.cpp
   cryptonote/src/cryptonote/core/blockchain/serializer/transaction_index.cpp
   cryptonote/src/cryptonote/core/TransactionPrefixImpl.cpp
+  cryptonote/src/cryptonote/crypto/crypto.cpp
   cryptonote/src/cryptonote/structures/block_entry.cpp
   cryptonote/src/cryptonote/structures/array.cpp
   cryptonote/src/NodeRpcProxy/NodeRpcProxy.cpp
