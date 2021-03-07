@@ -123,6 +123,7 @@ set(CRYPTONOTE_SOURCES
   cryptonote/src/cryptonote/core/blockchain/serializer/crypto.cpp
   cryptonote/src/cryptonote/core/blockchain/serializer/transaction_index.cpp
   cryptonote/src/cryptonote/core/TransactionPrefixImpl.cpp
+  cryptonote/src/cryptonote/core/util/amount.cpp
   cryptonote/src/cryptonote/crypto/crypto.cpp
   cryptonote/src/cryptonote/structures/block_entry.cpp
   cryptonote/src/cryptonote/structures/array.cpp
