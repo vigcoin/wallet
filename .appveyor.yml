@@ -1,7 +1,7 @@
 version: 1.0.{build}
 image:
 - Visual Studio 2017
-- ubuntu
+- ubuntu2004
 platform:
   - x64
 configuration:
@@ -9,11 +9,12 @@ configuration:
   # - Debug
 install:
     - git submodule update --init --recursive
+    - cmd: git checkout 1a28f29d8651ab654c5586f3c80c6c94cc63167f
     - cmd: set QTDIR=C:\Qt\5.11\msvc2017_64
     - cmd: set BOOST_ROOT=C:\Libraries\boost_1_67_0
     - cmd: set PATH=%PATH%;%QTDIR%\bin
     - sh: sudo apt-get update
-    - sh: sudo apt install -y build-essential curl cmake libboost-all-dev libssl-dev libsodium-dev qt5-default qttools5-dev qttools5-dev-tools python-pip python-dev lcov git mercurial
+    - sh: sudo apt install -y build-essential curl cmake libboost-all-dev libssl-dev libsodium-dev qt5-default qttools5-dev qttools5-dev-tools lcov git mercurial
 before_build:
     - mkdir build
     - cd build
@@ -31,6 +32,6 @@ for:
   -
     matrix:
       only:
-        - image: ubuntu
+        - image: ubuntu2004
     build_script:
       - sh: make
