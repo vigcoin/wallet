@@ -14,12 +14,15 @@ sudo apt install -y build-essential curl cmake libboost-all-dev libssl-dev libso
 
 ```
 git clone https://github.com/vigcoin/wallet.git
+cd wallet
 ```
 
 **2. Get submodule update**
 
 ```
-git submodule update --depth 1 --init --recursive
+git clone https://github.com/vigcoin/coin.git cryptonote
+cd cryptonote
+git checkout 1a28f29d8651ab654c5586f3c80c6c94cc63167f
 ```
 
 **3. Build**

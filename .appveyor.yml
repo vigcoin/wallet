@@ -8,13 +8,13 @@ configuration:
   - Release
   # - Debug
 install:
-    - git submodule update --init --recursive
     - cmd: set QTDIR=C:\Qt\5.11\msvc2017_64
     - cmd: set BOOST_ROOT=C:\Libraries\boost_1_67_0
     - cmd: set PATH=%PATH%;%QTDIR%\bin
     - sh: sudo apt-get update
     - sh: sudo apt install -y build-essential curl cmake libboost-all-dev libssl-dev libsodium-dev qt5-default qttools5-dev qttools5-dev-tools lcov git mercurial
 before_build:
+    - git clone https://github.com/vigcoin/coin.git cryptonote
     - cd cryptonote
     - git checkout 1a28f29d8651ab654c5586f3c80c6c94cc63167f
     - cd ..
