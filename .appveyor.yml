@@ -9,7 +9,9 @@ configuration:
   # - Debug
 install:
     - git submodule update --init --recursive
-    - cmd: git checkout 1a28f29d8651ab654c5586f3c80c6c94cc63167f
+    - cd cryptonote
+    - git checkout 1a28f29d8651ab654c5586f3c80c6c94cc63167f
+    - cd ..
     - cmd: set QTDIR=C:\Qt\5.11\msvc2017_64
     - cmd: set BOOST_ROOT=C:\Libraries\boost_1_67_0
     - cmd: set PATH=%PATH%;%QTDIR%\bin
