@@ -8,7 +8,7 @@ configuration:
   - Release
   # - Debug
 install:
-    - git clone https://github.com/vigcoin/coin.git cryptonote
+    - git submodule update --init --recursive
     - cd cryptonote
     - git checkout 1a28f29d8651ab654c5586f3c80c6c94cc63167f
     - cd ..
