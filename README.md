@@ -6,8 +6,10 @@ VIG WALLET
 
 ## Ubuntu Environment Setup
 
+# Currently supported version ubuntu 20.04 LTS
+
 ```
-sudo apt install -y build-essential curl cmake libboost-all-dev libssl-dev libsodium-dev qt5-default qttools5-dev qttools5-dev-tools python-pip python-dev lcov git mercurial
+sudo sudo apt install -y build-essential curl cmake libboost-all-dev libssl-dev libsodium-dev qt5-default qttools5-dev qttools5-dev-tools lcov git mercurial
 ```
 
 **1. Clone wallet sources**

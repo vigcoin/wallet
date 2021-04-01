@@ -73,12 +73,8 @@ set(CRYPTONOTE_SOURCES
   cryptonote/src/common/os.cpp
   cryptonote/src/common/hex.cpp
   cryptonote/src/common/file.cpp
-  cryptonote/src/stream/MemoryInputStream.cpp
-  cryptonote/src/stream/StdInputStream.cpp
-  cryptonote/src/stream/StdOutputStream.cpp
-  cryptonote/src/stream/StreamTools.cpp
-  cryptonote/src/stream/StringOutputStream.cpp
-  cryptonote/src/stream/VectorOutputStream.cpp
+  cryptonote/src/stream/writer.cpp
+  cryptonote/src/stream/reader.cpp
   cryptonote/src/crypto/blake256.c
   cryptonote/src/crypto/chacha.c
   cryptonote/src/crypto/crypto-ops-data.c
