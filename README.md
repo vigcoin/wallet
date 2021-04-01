@@ -22,7 +22,7 @@ cd wallet
 ```
 git clone https://github.com/vigcoin/coin.git cryptonote
 cd cryptonote
-git checkout 1a28f29d8651ab654c5586f3c80c6c94cc63167f
+git checkout ac75d60b116b6a31eb689b0c62fa670671294e77
 ```
 
 **3. Build**

@@ -120,7 +120,7 @@ set(CRYPTONOTE_SOURCES
   cryptonote/src/cryptonote/core/blockchain/indexing/generated_transaction.cpp
   cryptonote/src/cryptonote/core/blockchain/indexing/timestamp_transaction.cpp
   cryptonote/src/cryptonote/core/blockchain/indexing/timestamp_block.cpp
-  cryptonote/src/cryptonote/core/blockchain/serializer/basics.cpp
+  cryptonote/src/cryptonote/core/transaction/serializer/basics.cpp
   cryptonote/src/cryptonote/core/blockchain/serializer/block_index.cpp
   cryptonote/src/cryptonote/core/blockchain/serializer/crypto.cpp
   cryptonote/src/cryptonote/core/blockchain/serializer/transaction_index.cpp
