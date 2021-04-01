@@ -3,7 +3,7 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include "CryptoNoteWrapper.h"
-#include "common/binary_array.h"
+#include "common/binary.h"
 #include "config/common.h"
 #include "cryptonote/core/CryptoNoteFormatUtils.h"
 #include "cryptonote/core/currency.h"

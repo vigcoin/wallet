@@ -64,12 +64,11 @@ set(CRYPTONOTE_SOURCES
   cryptonote/src/config/mainnet.cpp
   cryptonote/src/config/testnet.cpp
   cryptonote/src/common/base58.cpp
-  cryptonote/src/common/StringTools.cpp
   cryptonote/src/common/StringView.cpp
   cryptonote/src/common/JsonValue.cpp
   cryptonote/src/common/ConsoleTools.cpp
-  cryptonote/src/common/binary_array.cpp
-  cryptonote/src/common/stream.cpp
+  cryptonote/src/common/binary.cpp
+  cryptonote/src/common/str.cpp
   cryptonote/src/common/os.cpp
   cryptonote/src/common/hex.cpp
   cryptonote/src/common/file.cpp
@@ -167,6 +166,7 @@ set(CRYPTONOTE_SOURCES
   cryptonote/src/http/HttpResponse.cpp
   cryptonote/src/rpc/HttpClient.cpp
   cryptonote/src/rpc/JsonRpc.cpp
+  cryptonote/src/p2p/types.cpp
   cryptonote/src/p2p/NetNode.cpp
   cryptonote/src/p2p/LevinProtocol.cpp
   cryptonote/src/command_line/NetNodeConfig.cpp
