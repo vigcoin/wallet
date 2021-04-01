@@ -17,6 +17,7 @@ include_directories(${CMAKE_BINARY_DIR}
     cryptonote/contrib/epee/include
     cryptonote/src/common
     cryptonote/src/crypto
+    cryptonote/src/cryptonote/core
     cryptonote/src)
 
 find_package(Qt5LinguistTools REQUIRED)
@@ -97,7 +98,6 @@ set(CRYPTONOTE_SOURCES
   cryptonote/src/crypto/slow-hash.c
   cryptonote/src/crypto/tree-hash.c
   cryptonote/src/crypto/aesb.c
-  cryptonote/src/cryptonote/core/TransactionExtra.cpp
   cryptonote/src/cryptonote/core/key.cpp
   cryptonote/src/cryptonote/core/account.cpp
   cryptonote/src/cryptonote/core/blockchain.cpp
@@ -107,9 +107,10 @@ set(CRYPTONOTE_SOURCES
   cryptonote/src/cryptonote/core/IBlock.cpp
   cryptonote/src/cryptonote/core/hardfork.cpp
   cryptonote/src/cryptonote/core/difficulty.cpp
-  cryptonote/src/cryptonote/core/Transaction.cpp
-  cryptonote/src/cryptonote/core/TransactionExtra.cpp
-  cryptonote/src/cryptonote/core/TransactionUtils.cpp
+  cryptonote/src/cryptonote/core/transaction/Transaction.cpp
+  cryptonote/src/cryptonote/core/transaction/TransactionExtra.cpp
+  cryptonote/src/cryptonote/core/transaction/TransactionPrefixImpl.cpp
+  cryptonote/src/cryptonote/core/transaction/TransactionUtils.cpp
   cryptonote/src/cryptonote/core/CryptoNoteTools.cpp
   cryptonote/src/cryptonote/core/tx_memory_pool.cpp
   cryptonote/src/cryptonote/core/checkpoints.cpp
@@ -124,7 +125,6 @@ set(CRYPTONOTE_SOURCES
   cryptonote/src/cryptonote/core/blockchain/serializer/block_index.cpp
   cryptonote/src/cryptonote/core/blockchain/serializer/crypto.cpp
   cryptonote/src/cryptonote/core/blockchain/serializer/transaction_index.cpp
-  cryptonote/src/cryptonote/core/TransactionPrefixImpl.cpp
   cryptonote/src/cryptonote/core/util/amount.cpp
   cryptonote/src/cryptonote/crypto/crypto.cpp
   cryptonote/src/cryptonote/structures/block_entry.cpp
