@@ -51,7 +51,7 @@ std::string convertPaymentId(const std::string& paymentIdString) {
 }
 
 std::string extractPaymentId(const std::string& extra) {
-  std::vector<cryptonote::transaction_extra_field_t> extraFields;
+  std::vector<transaction_extra_t> extraFields;
   std::vector<uint8_t> extraVector;
   std::copy(extra.begin(), extra.end(), std::back_inserter(extraVector));
 
