@@ -94,6 +94,7 @@ set(CRYPTONOTE_SOURCES
   cryptonote/src/crypto/slow-hash.c
   cryptonote/src/crypto/tree-hash.c
   cryptonote/src/crypto/aesb.c
+  cryptonote/src/crypto/difficulty.c
   cryptonote/src/cryptonote/core/key.cpp
   cryptonote/src/cryptonote/core/account.cpp
   cryptonote/src/cryptonote/core/blockchain.cpp
@@ -102,7 +103,6 @@ set(CRYPTONOTE_SOURCES
   cryptonote/src/cryptonote/core/Miner.cpp
   cryptonote/src/cryptonote/core/IBlock.cpp
   cryptonote/src/cryptonote/core/hardfork.cpp
-  cryptonote/src/cryptonote/core/difficulty.cpp
   cryptonote/src/cryptonote/core/transaction/Transaction.cpp
   cryptonote/src/cryptonote/core/transaction/TransactionExtra.cpp
   cryptonote/src/cryptonote/core/transaction/TransactionPrefixImpl.cpp
