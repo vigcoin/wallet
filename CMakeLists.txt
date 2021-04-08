@@ -76,6 +76,7 @@ set(CRYPTONOTE_SOURCES
   cryptonote/src/stream/writer.cpp
   cryptonote/src/stream/reader.cpp
   cryptonote/src/stream/block.cpp
+  cryptonote/src/stream/transaction.cpp
   cryptonote/src/crypto/blake256.c
   cryptonote/src/crypto/chacha.c
   cryptonote/src/crypto/crypto-ops-data.c
@@ -121,6 +122,7 @@ set(CRYPTONOTE_SOURCES
   cryptonote/src/cryptonote/core/transaction/serializer/basics.cpp
   cryptonote/src/cryptonote/core/blockchain/serializer/block_index.cpp
   cryptonote/src/cryptonote/core/blockchain/serializer/crypto.cpp
+  cryptonote/src/cryptonote/serializer/core_state_info.cpp
   cryptonote/src/cryptonote/core/util/amount.cpp
   cryptonote/src/cryptonote/crypto/crypto.cpp
   cryptonote/src/cryptonote/structures/block_entry.cpp
