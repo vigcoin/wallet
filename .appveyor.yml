@@ -2,6 +2,7 @@ version: 1.0.{build}
 image:
 - Visual Studio 2017
 - ubuntu2004
+- ubuntu1804
 platform:
   - x64
 configuration:
@@ -16,7 +17,7 @@ install:
 before_build:
     - git clone https://github.com/vigcoin/coin.git cryptonote
     - cd cryptonote
-    - git checkout -qf ffc374b2dea717c597b881dc379e5af296871916
+    - git checkout -qf 94f622f12e0380a693430a29081271a31b493351
     - cd ..
     - mkdir build
     - cd build
