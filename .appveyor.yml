@@ -17,7 +17,7 @@ install:
 before_build:
     - git clone https://github.com/vigcoin/coin.git cryptonote
     - cd cryptonote
-    - git checkout -qf 4d762f7861a583185e869fe25a8210b1432b5442
+    - git checkout -qf 53f1b50cf0328d8ec2deabf389951f151c610359
     - cd ..
     - mkdir build
     - cd build
