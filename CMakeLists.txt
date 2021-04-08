@@ -75,6 +75,7 @@ set(CRYPTONOTE_SOURCES
   cryptonote/src/common/file.cpp
   cryptonote/src/stream/writer.cpp
   cryptonote/src/stream/reader.cpp
+  cryptonote/src/stream/block.cpp
   cryptonote/src/crypto/blake256.c
   cryptonote/src/crypto/chacha.c
   cryptonote/src/crypto/crypto-ops-data.c
