@@ -12,6 +12,8 @@
 #include "command_line/NetNodeConfig.h"
 #include "cryptonote/core/core.h"
 #include "cryptonote/protocol/handler.h"
+#include "cryptonote/core/blockchain.h"
+#include "cryptonote/structures/block_entry.h"
 #include "InProcessNode/InProcessNode.h"
 #include "p2p/NetNode.h"
 #include "wallet_legacy/WalletLegacy.h"

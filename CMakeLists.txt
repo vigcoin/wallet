@@ -18,6 +18,7 @@ include_directories(${CMAKE_BINARY_DIR}
     cryptonote/src/common
     cryptonote/src/crypto
     cryptonote/src/cryptonote/core
+    cryptonote/src/stream
     cryptonote/src)
 
 find_package(Qt5LinguistTools REQUIRED)
@@ -119,7 +120,6 @@ set(CRYPTONOTE_SOURCES
   cryptonote/src/cryptonote/core/transaction/serializer/basics.cpp
   cryptonote/src/cryptonote/core/blockchain/serializer/block_index.cpp
   cryptonote/src/cryptonote/core/blockchain/serializer/crypto.cpp
-  cryptonote/src/cryptonote/core/blockchain/serializer/transaction_index.cpp
   cryptonote/src/cryptonote/core/util/amount.cpp
   cryptonote/src/cryptonote/crypto/crypto.cpp
   cryptonote/src/cryptonote/structures/block_entry.cpp
